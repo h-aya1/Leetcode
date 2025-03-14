@@ -1,30 +1,16 @@
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
-        def str_sn(n):
-            if n == 1:
-                return "0"
+        if n == 1:
+            return "0"
+            
+        length = 2 ** n
+        if k == length//2:
+            return "1"
 
-            return str_sn(n-1) + "1" + self.invert(str_sn(n-1))[::-1]
+        if k < length // 2:
+            return self.findKthBit(n - 1, k)
 
-        return str_sn(n)[k-1]
+        return self.invert(self.findKthBit(n - 1, length - k))
 
-    def invert(self, x):
-
-        x = list(x)
-
-        for i in range(len(x)):
-
-            if x[i] == "1":
-
-                x[i] = "0"
-
-            else:
-
-                x[i] = "1"
-
-        return "".join(x)
-        
-
-
-        
-        
+    def invert(self, binary):
+        return "0" if binary == "1" else "1"
